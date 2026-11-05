@@ -1,0 +1,11 @@
+.firmatlas-vat-hint {
+	display: block;
+	margin-top: 4px;
+	font-size: 0.875em;
+}
+.firmatlas-vat-hint.is-invalid {
+	color: #b32d2e;
+}
+.firmatlas-vat-hint.is-valid {
+	color: #007017;
+}

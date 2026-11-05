@@ -1,0 +1,58 @@
+# Local WordPress + WooCommerce for developing the plugin.
+#   docker compose -f dev/docker-compose.yml up -d
+#   sh dev/setup.sh            installs WordPress, WooCommerce, a product and both checkouts
+# http://localhost:8890 (admin / admin)
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 3s
+      retries: 30
+
+  wordpress:
+    image: wordpress:7.0-php8.3-apache
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8890:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', 'http://localhost:8890');
+        define('WP_SITEURL', 'http://localhost:8890');
+        // The browser reaches the API at the configured URL; PHP inside Docker needs the host's address.
+        define('FIRMATLAS_SERVER_API_URL', getenv('FIRMATLAS_SERVER_API_URL') ?: '');
+      FIRMATLAS_SERVER_API_URL: ${FIRMATLAS_SERVER_API_URL:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - wp:/var/www/html
+      - ..:/var/www/html/wp-content/plugins/firmatlas-for-woocommerce
+
+  cli:
+    image: wordpress:cli-php8.3
+    profiles: ["cli"]
+    user: "33:33"
+    depends_on: [wordpress]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp:/var/www/html
+      - ..:/var/www/html/wp-content/plugins/firmatlas-for-woocommerce
+
+volumes:
+  wp:
