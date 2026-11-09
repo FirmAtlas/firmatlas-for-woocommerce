@@ -38,7 +38,7 @@ The secret key never leaves your server. The publishable key is in the page, whi
 
 ## Requirements
 
-PHP 8.1+, WordPress 6.6+, WooCommerce 9.0+ (tested with WordPress 7.0 and WooCommerce 11.2).
+PHP 8.1+, WordPress 6.6+, WooCommerce 9.0+ (tested with WordPress 7.1 and WooCommerce 11.2).
 
 ## Develop
 
@@ -48,6 +48,8 @@ sh dev/setup.sh      # WordPress, WooCommerce, a product, block checkout at /che
 ```
 
 http://localhost:8890, `admin` / `admin`. Point the plugin at a local Firmatlas gateway by setting its API address (*Advanced*) for the browser, and `FIRMATLAS_SERVER_API_URL` in `dev/.env` for PHP inside Docker (e.g. `http://host.docker.internal:18081`).
+
+Checks: `php tests/vat-test.php`, and `phpcs` with the WordPress Coding Standards (`phpcs.xml.dist`). The release zip leaves out the files in `.distignore` (dev tooling and tests); run Plugin Check on that, not on the repository. Acceptance results: `docs/phase-5-acceptance.md`.
 
 ## Licence
 

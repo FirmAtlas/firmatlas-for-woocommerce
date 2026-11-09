@@ -98,7 +98,7 @@ final class Order_Meta {
 		if ( '' === $vat ) {
 			return;
 		}
-		$labels = array(
+		$labels     = array(
 			Validator::VALID   => __( 'valid', 'firmatlas-for-woocommerce' ),
 			Validator::INVALID => __( 'not valid', 'firmatlas-for-woocommerce' ),
 			Validator::UNKNOWN => __( 'not checked', 'firmatlas-for-woocommerce' ),

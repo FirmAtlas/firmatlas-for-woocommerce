@@ -28,6 +28,13 @@ final class Validator {
 	private const UNKNOWN_CACHE_SECONDS = 10 * MINUTE_IN_SECONDS;
 
 	/**
+	 * Results already worked out in this request, by digits.
+	 *
+	 * @var array<string, array{status:string, message:string, digits:?string}>
+	 */
+	private static array $checked = array();
+
+	/**
 	 * Checks a VAT number.
 	 *
 	 * @param string $raw What the customer typed.
@@ -51,12 +58,16 @@ final class Validator {
 		if ( '' === Settings::secret_key() ) {
 			return self::result( self::UNKNOWN, '', $digits );
 		}
+		if ( isset( self::$checked[ $digits ] ) ) {
+			return self::$checked[ $digits ];
+		}
 		$cached = get_transient( 'firmatlas_vat_' . $digits );
 		if ( is_array( $cached ) && isset( $cached['status'], $cached['message'] ) ) {
 			return self::result( (string) $cached['status'], (string) $cached['message'], $digits );
 		}
 
-		$result = self::ask_api( $digits );
+		$result                   = self::ask_api( $digits );
+		self::$checked[ $digits ] = $result;
 		set_transient(
 			'firmatlas_vat_' . $digits,
 			array(

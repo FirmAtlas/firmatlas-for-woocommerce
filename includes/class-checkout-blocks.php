@@ -95,17 +95,17 @@ final class Checkout_Blocks {
 	/**
 	 * Writes the documented order meta when WooCommerce stores the field on an order.
 	 *
-	 * @param string    $key    Field id.
-	 * @param mixed     $value  Field value.
-	 * @param string    $group  Field group.
-	 * @param \WC_Data  $object The order or customer.
+	 * @param string   $key     Field id.
+	 * @param mixed    $value   Field value.
+	 * @param string   $group   Field group.
+	 * @param \WC_Data $wc_data The order or customer.
 	 * @return void
 	 */
-	public static function save( $key, $value, $group, $object ): void {
-		if ( self::FIELD !== $key || ! $object instanceof \WC_Order ) {
+	public static function save( $key, $value, $group, $wc_data ): void {
+		if ( self::FIELD !== $key || ! $wc_data instanceof \WC_Order ) {
 			return;
 		}
-		Order_Meta::apply( $object, (string) $value );
+		Order_Meta::apply( $wc_data, (string) $value );
 	}
 
 	/**

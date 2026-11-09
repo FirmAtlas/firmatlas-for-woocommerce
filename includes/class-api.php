@@ -50,7 +50,7 @@ final class Api {
 	 * Returns the API's error message from an answer, or a fallback.
 	 *
 	 * @param array{status:int, body:array<string,mixed>} $answer   An answer from get().
-	 * @param string                                       $fallback Text when the answer has no message.
+	 * @param string                                      $fallback Text when the answer has no message.
 	 * @return string
 	 */
 	public static function error_message( array $answer, string $fallback ): string {
