@@ -1,0 +1,159 @@
+# Copyright (C) 2026 Arne Van Daele
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: FirmAtlas for WooCommerce 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/FirmAtlas/firmatlas-for-woocommerce/issues\n"
+"PO-Revision-Date: 2026-11-09 14:00+0100\n"
+"Last-Translator: Arne Van Daele\n"
+"Language-Team: fr_FR\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: firmatlas-for-woocommerce\n"
+
+msgid "FirmAtlas for WooCommerce"
+msgstr "FirmAtlas for WooCommerce"
+
+msgid "https://github.com/FirmAtlas/firmatlas-for-woocommerce"
+msgstr "https://github.com/FirmAtlas/firmatlas-for-woocommerce"
+
+msgid "Belgian company search at checkout: customers pick their company and the billing details fill themselves. Adds a VAT number field and checks Belgian VAT numbers. Company data from the KBO/BCE through the Firmatlas API."
+msgstr "Recherche d'entreprises belges au paiement : les clients choisissent leur entreprise et les données de facturation se remplissent toutes seules. Ajoute un champ pour le numéro de TVA et vérifie les numéros de TVA belges. Données d'entreprise issues de la BCE via l'API Firmatlas."
+
+msgid "Arne Van Daele"
+msgstr "Arne Van Daele"
+
+msgid "https://arnevandaele.com"
+msgstr "https://arnevandaele.com"
+
+msgid "VAT number"
+msgstr "Numéro de TVA"
+
+msgid "VAT number (optional)"
+msgstr "Numéro de TVA (facultatif)"
+
+msgid "FirmAtlas: the VAT number %s did not check out (KBO/VIES). Check it before invoicing without VAT."
+msgstr "FirmAtlas : le numéro de TVA %s n'est pas valable selon la BCE ou VIES. Vérifiez-le avant de facturer sans TVA."
+
+msgid "valid"
+msgstr "valable"
+
+msgid "not valid"
+msgstr "non valable"
+
+msgid "not checked"
+msgstr "non vérifié"
+
+msgid "not checked (outside Belgium)"
+msgstr "non vérifié (hors Belgique)"
+
+msgid "Enterprise number"
+msgstr "Numéro d'entreprise"
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "Testing…"
+msgstr "Test en cours…"
+
+msgid "Not allowed."
+msgstr "Non autorisé."
+
+msgid "Add and save a secret key first."
+msgstr "Ajoutez et enregistrez d'abord une clé secrète."
+
+msgid "The API could not be reached: %s"
+msgstr "L'API est injoignable : %s"
+
+msgid "The API refused the request."
+msgstr "L'API a refusé la demande."
+
+msgid "Connected. The secret key works."
+msgstr "Connecté. La clé secrète fonctionne."
+
+msgid "Valid VAT number"
+msgstr "Numéro de TVA valable"
+
+msgid "FirmAtlas"
+msgstr "FirmAtlas"
+
+msgid "Company search at checkout"
+msgstr "Recherche d'entreprises au paiement"
+
+msgid "Customers search Belgian companies by name or number in the company field, and the billing address fills itself. Get your keys at %s."
+msgstr "Les clients cherchent des entreprises belges par nom ou par numéro dans le champ entreprise, et l'adresse de facturation se remplit toute seule. Obtenez vos clés sur %s."
+
+msgid "Publishable key"
+msgstr "Clé publique"
+
+msgid "Starts with kbo_pk_live_. Used in the browser; allow this shop's address as an origin for the key."
+msgstr "Commence par kbo_pk_live_. Utilisée dans le navigateur ; autorisez l'adresse de cette boutique comme origine de la clé."
+
+msgid "Secret key"
+msgstr "Clé secrète"
+
+msgid "Starts with kbo_sk_live_. Stays on this server; used to check VAT numbers."
+msgstr "Commence par kbo_sk_live_. Reste sur ce serveur ; sert à vérifier les numéros de TVA."
+
+msgid "Company search"
+msgstr "Recherche d'entreprises"
+
+msgid "Search companies in the checkout's company field"
+msgstr "Chercher des entreprises dans le champ entreprise du paiement"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Language of company names, addresses and the search list."
+msgstr "Langue des noms d'entreprise, des adresses et de la liste de recherche."
+
+msgid "Site language"
+msgstr "Langue du site"
+
+msgid "VAT number field"
+msgstr "Champ du numéro de TVA"
+
+msgid "Add an optional VAT number field to checkout"
+msgstr "Ajouter un champ facultatif pour le numéro de TVA au paiement"
+
+msgid "When a Belgian VAT number is not valid"
+msgstr "Quand un numéro de TVA belge n'est pas valable"
+
+msgid "Checked against the KBO register and VIES. If the check cannot be done (the API or VIES is down), checkout always goes ahead. VAT numbers from other countries are not checked."
+msgstr "Vérifié dans la BCE et dans VIES. Si la vérification est impossible (l'API ou VIES est indisponible), la commande passe toujours. Les numéros de TVA d'autres pays ne sont pas vérifiés."
+
+msgid "Accept the order and add an order note"
+msgstr "Accepter la commande et ajouter une note"
+
+msgid "Refuse the order until the number is fixed"
+msgstr "Refuser la commande tant que le numéro n'est pas corrigé"
+
+msgid "Don't check"
+msgstr "Ne pas vérifier"
+
+msgid "Advanced"
+msgstr "Avancé"
+
+msgid "API address"
+msgstr "Adresse de l'API"
+
+msgid "Leave empty for the hosted Firmatlas API. Set it to use a self-hosted engine behind your own gateway."
+msgstr "Laissez vide pour l'API Firmatlas hébergée. Remplissez-la pour utiliser votre propre moteur derrière votre propre passerelle."
+
+msgid "Test connection"
+msgstr "Tester la connexion"
+
+msgid "Tests the saved secret key. Save first after changing it."
+msgstr "Teste la clé secrète enregistrée. Enregistrez d'abord si vous l'avez modifiée."
+
+msgid "This is not a valid Belgian VAT number. It looks like BE0123.456.749."
+msgstr "Ce n'est pas un numéro de TVA belge valable. Il ressemble à BE0123.456.749."
+
+msgid "No Belgian company is registered under this VAT number."
+msgstr "Aucune entreprise belge n'est inscrite sous ce numéro de TVA."
+
+msgid "This VAT number is not active for intra-EU trade according to VIES."
+msgstr "Selon VIES, ce numéro de TVA n'est pas actif pour les échanges intracommunautaires."

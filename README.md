@@ -51,6 +51,18 @@ http://localhost:8890, `admin` / `admin`. Point the plugin at a local Firmatlas 
 
 Checks: `php tests/vat-test.php`, and `phpcs` with the WordPress Coding Standards (`phpcs.xml.dist`). The release zip leaves out the files in `.distignore` (dev tooling and tests); run Plugin Check on that, not on the repository. Acceptance results: `docs/phase-5-acceptance.md`.
 
+## Translations
+
+Dutch (`nl_BE`, `nl_NL`) and French (`fr_BE`, `fr_FR`) ship in `languages/`; English is the source. Translations installed in `wp-content/languages/plugins` take precedence. After changing a string:
+
+```sh
+docker run --rm -v "$PWD":/app -w /app wordpress:cli wp i18n make-pot . languages/firmatlas-for-woocommerce.pot --exclude=dev,tests,docs,vendor,node_modules,assets/js/firmatlas-autocomplete.iife.js
+docker run --rm -v "$PWD":/app -w /app wordpress:cli wp i18n update-po languages/firmatlas-for-woocommerce.pot languages
+docker run --rm -v "$PWD":/app -w /app wordpress:cli sh -c "wp i18n make-mo languages && wp i18n make-php languages"
+```
+
+The company names and addresses in the search list come from the API in the language chosen in the settings.
+
 ## Licence
 
 GPL-2.0-or-later. The bundled widget (`assets/js/firmatlas-autocomplete.iife.js`) is MIT. Company data: KBO/BCE open data, FPS Economy, S.M.E.s, Self-employed and Energy. Not affiliated with or endorsed by the FPS Economy.

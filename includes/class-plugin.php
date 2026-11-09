@@ -25,6 +25,7 @@ final class Plugin {
 		if ( ! class_exists( \WooCommerce::class ) ) {
 			return;
 		}
+		add_action( 'init', array( self::class, 'load_textdomain' ) );
 		add_filter( 'woocommerce_get_settings_pages', array( self::class, 'settings_page' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( FIRMATLAS_WC_FILE ), array( self::class, 'action_links' ) );
 		add_action( 'admin_enqueue_scripts', array( self::class, 'admin_script' ) );
@@ -33,6 +34,17 @@ final class Plugin {
 		Order_Meta::register();
 		Checkout_Classic::register();
 		Checkout_Blocks::register();
+	}
+
+	/**
+	 * Loads the bundled Dutch, French and English translations; translations
+	 * installed in wp-content/languages take precedence.
+	 *
+	 * @return void
+	 */
+	public static function load_textdomain(): void {
+		// phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- the plugin ships its own translations outside wordpress.org.
+		load_plugin_textdomain( 'firmatlas-for-woocommerce', false, dirname( plugin_basename( FIRMATLAS_WC_FILE ) ) . '/languages' );
 	}
 
 	/**

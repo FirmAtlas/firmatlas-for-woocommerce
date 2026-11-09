@@ -33,7 +33,7 @@ Run on 2026-11-09 against a local Firmatlas engine with the full KBO dataset.
 
 - Not tested through the real gateway: publishable-key origin rules, secret-key auth on VAT checks, the gateway's CORS. The *Test connection* button was not tried.
 - With an unroutable API, placing an order waits up to 4 s for the VAT check. If the API answers but the stored VIES result is stale, a second call can wait up to 7 s more.
-- Only one browser (Chromium), English locale. NL and FR translations are not shipped yet (there is no `languages/` folder); the spec asks for them.
+- Only one browser (Chromium); the checkout flows ran in English. Dutch and French translations were added afterwards (2026-11-09): `languages/` holds nl_BE, nl_NL, fr_BE and fr_FR (PO, MO and `.l10n.php`); checked in WordPress 7.1 with the site in nl_BE and fr_BE (plugin strings and the classic checkout's VAT label), and Plugin Check and PHPCS stay clean.
 - The block checkout has no live VAT hint; an invalid number shows only when the order is placed. This matches the README.
 - Typing in the company field in the first half second after the cart page loads can lose characters: WooCommerce's "added to cart" notice takes focus. This is WooCommerce behaviour, not the plugin's.
 - Engine note, not the plugin: autocomplete and search found nothing for "electrabel" or "proximus" on the local index, though `/v1/enterprises/0403170701` works. The local search index looks incomplete.
