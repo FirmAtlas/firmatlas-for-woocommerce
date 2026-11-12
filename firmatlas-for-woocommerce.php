@@ -3,7 +3,7 @@
  * Plugin Name:          FirmAtlas for WooCommerce
  * Plugin URI:           https://github.com/FirmAtlas/firmatlas-for-woocommerce
  * Description:          Belgian company search at checkout: customers pick their company and the billing details fill themselves. Adds a VAT number field and checks Belgian VAT numbers. Company data from the KBO/BCE through the Firmatlas API.
- * Version:              0.1.0
+ * Version:              0.2.0
  * Requires at least:    6.6
  * Requires PHP:         8.1
  * Requires Plugins:     woocommerce
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'FIRMATLAS_WC_VERSION', '0.1.0' );
+define( 'FIRMATLAS_WC_VERSION', '0.2.0' );
 define( 'FIRMATLAS_WC_FILE', __FILE__ );
 define( 'FIRMATLAS_WC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'FIRMATLAS_WC_URL', plugin_dir_url( __FILE__ ) );

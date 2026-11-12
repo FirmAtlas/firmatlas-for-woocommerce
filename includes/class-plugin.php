@@ -191,7 +191,7 @@ final class Plugin {
 			'firmatlas-autocomplete',
 			FIRMATLAS_WC_URL . 'assets/js/firmatlas-autocomplete.iife.js',
 			array(),
-			'0.1.0',
+			'0.2.0',
 			array( 'in_footer' => true )
 		);
 	}

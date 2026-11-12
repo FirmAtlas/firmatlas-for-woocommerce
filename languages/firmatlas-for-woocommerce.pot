@@ -219,3 +219,15 @@ msgstr ""
 #: includes/class-validator.php:116
 msgid "This VAT number is not active for intra-EU trade according to VIES."
 msgstr ""
+
+#: includes/class-order-meta.php
+msgid "receives Peppol invoices"
+msgstr ""
+
+#: includes/class-order-meta.php
+msgid "not on Peppol"
+msgstr ""
+
+#: includes/class-order-meta.php
+msgid "Peppol"
+msgstr ""

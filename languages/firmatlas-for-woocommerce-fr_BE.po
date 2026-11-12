@@ -157,3 +157,12 @@ msgstr "Aucune entreprise belge n'est inscrite sous ce numéro de TVA."
 
 msgid "This VAT number is not active for intra-EU trade according to VIES."
 msgstr "Selon VIES, ce numéro de TVA n'est pas actif pour les échanges intracommunautaires."
+
+msgid "receives Peppol invoices"
+msgstr "reçoit des factures Peppol"
+
+msgid "not on Peppol"
+msgstr "pas sur Peppol"
+
+msgid "Peppol"
+msgstr "Peppol"
