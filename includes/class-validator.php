@@ -23,6 +23,10 @@ final class Validator {
 	public const FOREIGN = 'foreign';
 	public const EMPTY   = 'empty';
 
+	public const PEPPOL_YES     = 'yes';
+	public const PEPPOL_NO      = 'no';
+	public const PEPPOL_UNKNOWN = 'unknown';
+
 	private const CACHE_SECONDS = DAY_IN_SECONDS;
 	// Short, so a customer who typed the number while VIES was slow does not wait again at checkout.
 	private const UNKNOWN_CACHE_SECONDS = 10 * MINUTE_IN_SECONDS;
@@ -30,7 +34,7 @@ final class Validator {
 	/**
 	 * Results already worked out in this request, by digits.
 	 *
-	 * @var array<string, array{status:string, message:string, digits:?string}>
+	 * @var array<string, array{status:string, message:string, digits:?string, peppol:string}>
 	 */
 	private static array $checked = array();
 
@@ -38,7 +42,7 @@ final class Validator {
 	 * Checks a VAT number.
 	 *
 	 * @param string $raw What the customer typed.
-	 * @return array{status:string, message:string, digits:?string}
+	 * @return array{status:string, message:string, digits:?string, peppol:string}
 	 */
 	public static function check( string $raw ): array {
 		if ( '' === Vat::normalize( $raw ) ) {
@@ -63,7 +67,7 @@ final class Validator {
 		}
 		$cached = get_transient( 'firmatlas_vat_' . $digits );
 		if ( is_array( $cached ) && isset( $cached['status'], $cached['message'] ) ) {
-			return self::result( (string) $cached['status'], (string) $cached['message'], $digits );
+			return self::result( (string) $cached['status'], (string) $cached['message'], $digits, (string) ( $cached['peppol'] ?? self::PEPPOL_UNKNOWN ) );
 		}
 
 		$result                   = self::ask_api( $digits );
@@ -73,6 +77,7 @@ final class Validator {
 			array(
 				'status'  => $result['status'],
 				'message' => $result['message'],
+				'peppol'  => $result['peppol'],
 			),
 			self::UNKNOWN === $result['status'] ? self::UNKNOWN_CACHE_SECONDS : self::CACHE_SECONDS
 		);
@@ -83,7 +88,7 @@ final class Validator {
 	 * Looks the number up; asks for a fresh VIES check when the stored one is missing or stale.
 	 *
 	 * @param string $digits Ten digits with valid check digits.
-	 * @return array{status:string, message:string, digits:?string}
+	 * @return array{status:string, message:string, digits:?string, peppol:string}
 	 */
 	private static function ask_api( string $digits ): array {
 		$answer = Api::get( '/v1/enterprises/' . $digits );
@@ -100,7 +105,8 @@ final class Validator {
 		if ( 200 !== $answer['status'] ) {
 			return self::result( self::UNKNOWN, '', $digits );
 		}
-		$vat = self::vies( $answer['body'] );
+		$peppol = self::peppol( $answer['body'] );
+		$vat    = self::vies( $answer['body'] );
 		if ( null === $vat ) {
 			$fresh = Api::get( '/v1/enterprises/' . $digits, array( 'refresh' => 'true' ), 7.0 );
 			if ( ! is_wp_error( $fresh ) && 200 === $fresh['status'] ) {
@@ -108,16 +114,32 @@ final class Validator {
 			}
 		}
 		if ( true === $vat ) {
-			return self::result( self::VALID, '', $digits );
+			return self::result( self::VALID, '', $digits, $peppol );
 		}
 		if ( false === $vat ) {
 			return self::result(
 				self::INVALID,
 				__( 'This VAT number is not active for intra-EU trade according to VIES.', 'firmatlas-for-woocommerce' ),
-				$digits
+				$digits,
+				$peppol
 			);
 		}
-		return self::result( self::UNKNOWN, '', $digits );
+		return self::result( self::UNKNOWN, '', $digits, $peppol );
+	}
+
+	/**
+	 * Reads the last Peppol check from an enterprise body: yes when the company receives Peppol invoices, no when the
+	 * check found none, unknown before the first check.
+	 *
+	 * @param array<string,mixed> $body The API's answer.
+	 * @return string One of the PEPPOL_ constants.
+	 */
+	private static function peppol( array $body ): string {
+		$peppol = $body['data']['peppol'] ?? null;
+		if ( ! is_array( $peppol ) || ! isset( $peppol['registered'] ) ) {
+			return self::PEPPOL_UNKNOWN;
+		}
+		return $peppol['registered'] && ! empty( $peppol['accepts_invoices'] ) ? self::PEPPOL_YES : self::PEPPOL_NO;
 	}
 
 	/**
@@ -140,13 +162,15 @@ final class Validator {
 	 * @param string      $status  One of the status constants.
 	 * @param string      $message Text for the customer, empty when there is nothing to say.
 	 * @param string|null $digits  The 10 digits when the number is Belgian-shaped.
-	 * @return array{status:string, message:string, digits:?string}
+	 * @param string      $peppol  One of the PEPPOL_ constants.
+	 * @return array{status:string, message:string, digits:?string, peppol:string}
 	 */
-	private static function result( string $status, string $message, ?string $digits ): array {
+	private static function result( string $status, string $message, ?string $digits, string $peppol = self::PEPPOL_UNKNOWN ): array {
 		return array(
 			'status'  => $status,
 			'message' => $message,
 			'digits'  => $digits,
+			'peppol'  => $peppol,
 		);
 	}
 }

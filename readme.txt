@@ -4,7 +4,7 @@ Tags: belgium, vat, company, autocomplete, checkout
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ Customers type their company name or enterprise number in the checkout's company
 * An optional VAT number field
 * Belgian VAT numbers checked against the KBO register and VIES; you choose whether an invalid number only adds an order note, refuses the order, or is not checked
 * Checkout always works, even when the API cannot be reached
-* The VAT number and enterprise number are saved on the order (`_billing_vat_number`, `_kbo_enterprise_number`) for invoicing and Peppol plugins
+* The VAT number, enterprise number and whether the company receives Peppol invoices are saved on the order (`_billing_vat_number`, `_kbo_enterprise_number`, `_firmatlas_peppol`) for invoicing and Peppol plugins
 * HPOS compatible
 
 = External service =
@@ -51,6 +51,11 @@ The company field works as a normal field and the VAT check counts as "unknown",
 No. They are saved on the order but not checked.
 
 == Changelog ==
+
+= 0.2.0 =
+* Peppol: the company search tags companies that receive Peppol invoices, and orders get `_firmatlas_peppol` (yes, no or unknown).
+* A slow or unreachable API now holds checkout up for at most 2 seconds instead of 4.
+* The company search's status message sits next to the field, inside the page's landmarks.
 
 = 0.1.0 =
 * First version: company search in the classic and block checkout, VAT number field and Belgian VAT check, order meta.

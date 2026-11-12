@@ -157,3 +157,12 @@ msgstr "Er is geen Belgisch bedrijf ingeschreven onder dit btw-nummer."
 
 msgid "This VAT number is not active for intra-EU trade according to VIES."
 msgstr "Volgens VIES is dit btw-nummer niet actief voor intracommunautaire handel."
+
+msgid "receives Peppol invoices"
+msgstr "ontvangt Peppol-facturen"
+
+msgid "not on Peppol"
+msgstr "niet op Peppol"
+
+msgid "Peppol"
+msgstr "Peppol"

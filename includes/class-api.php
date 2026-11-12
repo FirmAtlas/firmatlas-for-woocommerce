@@ -22,7 +22,7 @@ final class Api {
 	 * @param float                $timeout Seconds to wait.
 	 * @return array{status:int, body:array<string,mixed>}|\WP_Error
 	 */
-	public static function get( string $path, array $query = array(), float $timeout = 4.0 ) {
+	public static function get( string $path, array $query = array(), float $timeout = 2.0 ) {
 		$url      = add_query_arg( array_map( 'rawurlencode', $query ), Settings::server_api_url() . $path );
 		$response = wp_remote_get(
 			$url,

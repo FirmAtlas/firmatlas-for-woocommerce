@@ -24,8 +24,9 @@ Invoicing plugins, including Peppol invoicing, can read these from the order (`$
 | `_billing_vat_number` | The VAT number, normalized: uppercase, no spaces or dots | `BE0403170701` |
 | `_kbo_enterprise_number` | The 10-digit Belgian enterprise number; only for Belgian numbers that did not fail the check | `0403170701` |
 | `_firmatlas_vat_status` | Result of the check at checkout: `valid`, `invalid`, `unknown` (not checked or no answer) or `foreign` | `valid` |
+| `_firmatlas_peppol` | Whether the company receives Peppol invoices, from Firmatlas' last Peppol check: `yes`, `no` or `unknown` (not checked yet, no secret key, or no answer); only next to `_kbo_enterprise_number` | `yes` |
 
-The Peppol participant id of a Belgian company is `0208:` followed by `_kbo_enterprise_number`.
+The Peppol participant id of a Belgian company is `0208:` followed by `_kbo_enterprise_number`. An invoicing plugin can send by Peppol when `_firmatlas_peppol` is `yes` and by email otherwise.
 
 ## Setup
 
