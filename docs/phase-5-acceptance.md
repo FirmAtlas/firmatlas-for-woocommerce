@@ -37,3 +37,19 @@ Run on 2026-11-09 against a local Firmatlas engine with the full KBO dataset.
 - The block checkout has no live VAT hint; an invalid number shows only when the order is placed. This matches the README.
 - Typing in the company field in the first half second after the cart page loads can lose characters: WooCommerce's "added to cart" notice takes focus. This is WooCommerce behaviour, not the plugin's.
 - Engine note, not the plugin: autocomplete and search found nothing for "electrabel" or "proximus" on the local index, though `/v1/enterprises/0403170701` works. The local search index looks incomplete.
+
+## Through the real gateway (2026-11-12)
+
+Run against the platform's gateway (`dist/node/gateway.mjs` with Valkey and a copy of the platform database) in front of the local engine, with keys made in the portal: a publishable key allowing `http://localhost:8890` and a secret key. The plugin's API address pointed the browser at the gateway (`http://localhost:18081`) and PHP at `http://host.docker.internal:18081`. Classic checkout, VAT validation set to "Refuse the order". Chromium (the built-in browser of the Claude desktop app).
+
+| Check | Result |
+| --- | --- |
+| Company search with the publishable key from the allowed origin | Pass. "electric indu" listed ELECTRIC INDUSTRIES first; picking it filled company, `Goede Herderstraat 54 box A001`, 1140, Evere, BE and `BE1034565871`. The gateway counted 2 autocomplete calls for the whole name (debounce). |
+| The same key from another origin | Pass. 403 `origin_not_allowed` with "This publishable key does not allow requests from this origin." The CORS preflight allows only the listed origin. |
+| Publishable key on a non-search endpoint | Pass. 403. |
+| VAT check with the secret key | Pass. Live hint "Valid VAT number"; the order (#18) saved `_billing_vat_number` `BE1034565871`, `_kbo_enterprise_number` `1034565871`, `_firmatlas_vat_status` `valid`. |
+| Refusal | Pass. `BE0403170702` refused on the check digits; `BE0123456749` refused by the API answer: "No Belgian company is registered under this VAT number." |
+| Test connection | Pass. "Connected. The secret key works." |
+| Both keys revoked in the portal | Pass. After the gateway's 30-second key cache the API answered 401 `invalid_key`. The widget showed no suggestions and logged one console warning ("The API key is not valid or has been revoked. Company search is off; the field works as a normal input."). The order (#19) completed with `_firmatlas_vat_status` `unknown` and the enterprise number kept, even with "Refuse the order" on. |
+
+Not repeated through the gateway: the block checkout (same widget and the same server check; covered on 2026-11-09 behind the CORS proxy), and Safari on macOS and iPhone.
